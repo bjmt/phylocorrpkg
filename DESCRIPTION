@@ -7,9 +7,9 @@ Authors@R:
         comment = c(ORCID = "0000-0002-7441-2951"))
 URL: https://github.com/doxeylab/phylocorrpkg
 BugReports: https://github.com/doxeylab/phylocorrpkg/issues
-Description: Perform large-scale phylogenetic correlations between genes or
-      other traits across trees using presence-absence data.
+Description: Functional predictions from correlations across large phylogenetic
+      trees using presence-absence data.
 Depends: R (>= 4.0.0)
 License: GPL-3
 Encoding: UTF-8
-Imports: methods, stats, utils
+Imports: methods, stats, utils, foreach, S4Vectors, reshape2, dplyr
