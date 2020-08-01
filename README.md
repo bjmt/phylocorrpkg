@@ -84,6 +84,8 @@ annotations <- cleanAnnotations(annotations)
 
 PCC <- read_fst("PCC.fst")
 
+# Only scores which are associated with annotations are kept to generate the
+# prediction function
 PCCdf <- mergeScoresAndAnnotations(PCC, annotations)
 PCCfun <- getProbMatchFunSingle(PCCdf)
 
