@@ -24,7 +24,7 @@ fst::write_fst(as.data.frame(input), "Table.fst")
 
 ## Score calculation
 
-Depending on the number of families, these calculations can consume a lot of RAM and CPU time. Parallelisation can be achieved using the `doParCalc()` function. In order not to run out of RAM, objects are immediately written to disk and deleted from memory.
+Depending on the number of families, these calculations can consume a lot of RAM and CPU time. Parallelisation can be achieved using the `doParCalc()` function, though this is optional; the function will still work even if no cluster is registered. In order not to run out of RAM, objects are immediately written to disk and deleted from memory.
 
 ```r
 library(phylocorrpkg)
@@ -70,7 +70,7 @@ rm(OccDiff)
 
 ## Matching annotation probability functions from single scores
 
-This can be done with any annotation type. All that's needed is a `data.frame` with two columns: the first one with family names (matching those of the input column names), and the second with the annotation of interest. Families can have multiple annotations, appearing as duplicate rows. The probability functions can be obtained from any of the scores previously calculated.
+This can be done with any annotation type. All that's needed is a `data.frame` with two columns: the first one with family names (matching those of the input column names), and the second with the annotation of interest. Families can have multiple annotations, appearing as duplicate rows. The probability functions can be obtained from any of the scores previously calculated. This probability prediction function can then be used to generate probabilities for the entire input score set.
 
 ```r
 library(phylocorrpkg)
@@ -93,5 +93,26 @@ PCCPredictedProbs <- calcMatchingProbsSingle(PCC, PCCfun)
 
 If there too few data points near the upper range of scores, the probability prediction function can behave unexpectedly for high scores. Using smoothing can help greatly with this (by setting `useMeanSmoothing = TRUE` in `getProbMatchFunSingle()`, and adjusting the `windowSize` parameter if needed). Additionally, if none of the probabilities from actual scores approach 1 then setting a lower `maxProb` can help generate more realistic probabilities for higher scores. Visually inspecting the Score VS Probability plot as above can greatly aid in determining the best parameters to use in the `getProbMatchFunSingle()` function.
 
-Note: for P-value type scores, it is recommend to transform them with `-log10()` before generating the probability prediction function.
+## Matching annotation probability functions from two sets of scores
 
+To increase the prediction accuracy, the probability prediction function can be generated from two different scores.
+
+Note: for P-value type scores, it is recommend to transform them with `-log10()` before generating the probability prediction function. Also make sure to change any infinite values (resulting from P-values equalling zero) to a suitable high number.
+
+```r
+library(phylocorrpkg)
+library(fst)
+
+annotations <- read.table("annotations", header = TRUE, quote = "")
+annotations <- cleanAnnotations(annotations)
+
+rHyperP <- as.matrix(read_fst("rHyperP.fst"))
+rHyperP <- matrix(-log10(rHyperP), nrow = nrow(rHyperP),
+    dimnames = list(colnames(rHyperP), colnames(rHyperP)))
+rHyperP[is.infinite(rHyperP)] <- 321
+OccDiff <- read_fst("OccDiff.fst")
+
+rHyperPdf <- mergeScoresAndAnnotations(rHyperP, annotations)
+OccDiffdf <- mergeScoresAndAnnotations(OccDiff, annotations)
+
+```

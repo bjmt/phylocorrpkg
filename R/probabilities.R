@@ -12,8 +12,6 @@ mergeScoresAndAnnotations <- function(scores, annotations, highScoreIsBest = TRU
   scores2$Anno2 <- annotations[scores2$Fam2]
   scores2$MatchingAnno <- mapply(function(x, y) any(x %in% y),
       scores2$Anno1, scores2$Anno2)
-  scores2 <- scores2[order(scores2$Score, decreasing = highScoreIsBest), ]
-  scores2$CumProbMatch <- cumsum(scores2$MatchingAnno) / 1:nrow(scores2)
   scores2
 }
 
@@ -24,6 +22,8 @@ getProbMatchFunSingle <- function(merged, highScoreIsBest = TRUE, maxProb = 1,
     stop("Found NA values in Score column")
   if (any(is.infinite(merged$Score)))
     stop("Found non-finite values in score column")
+  merged <- merged[order(merged$Score, decreasing = highScoreIsBest), ]
+  merged$CumProbMatch <- cumsum(merged$MatchingAnno) / 1:nrow(merged)
   ProbMatch <- merged$CumProbMatch
   Scores <- merged$Score
   if (useMeanSmoothing) {
@@ -36,6 +36,12 @@ getProbMatchFunSingle <- function(merged, highScoreIsBest = TRUE, maxProb = 1,
     approxfun(Scores, ProbMatch, yleft = 0, yright = maxProb)
   else
     approxfun(Scores, ProbMatch, yleft = maxProb, yright = 0)
+}
+
+#' @export
+getProbMatchFunDouble <- function(df1, df2, highScoreIsBest1 = TRUE,
+  highScoreIsBest2 = TRUE, maxProb1 = 1, maxProb1 = 1) {
+
 }
 
 #' @export
