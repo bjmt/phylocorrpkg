@@ -93,5 +93,5 @@ PCCPredictedProbs <- calcMatchingProbsSingle(PCC, PCCfun)
 
 If there too few data points near the upper range of scores, the probability prediction function can behave unexpectedly for high scores. Using smoothing can help greatly with this (by setting `useMeanSmoothing = TRUE` in `getProbMatchFunSingle()`, and adjusting the `windowSize` parameter if needed). Additionally, if none of the probabilities from actual scores approach 1 then setting a lower `maxProb` can help generate more realistic probabilities for higher scores. Visually inspecting the Score VS Probability plot as above can greatly aid in determining the best parameters to use in the `getProbMatchFunSingle()` function.
 
-For P-value type scores, it is recommend to transform them with `-log10()` before generating the probability prediction function.
+Note: for P-value type scores, it is recommend to transform them with `-log10()` before generating the probability prediction function.
 
