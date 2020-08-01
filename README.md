@@ -6,6 +6,7 @@ The functions within this package have been provided so that one may make use of
 
 The `fst` format allows individual columns to be accessed very quickly, making it the optimal storage solution. However this means saving data as a `data.frames`, as well as saving the row names separately.
 
+To start, two things are needed: a phylogenetic tree, and a presence-absence matrix with tree tips as rows and families/genes/etc as column names.
 
 ```r
 library(phylocorrpkg)
