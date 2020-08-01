@@ -1,5 +1,5 @@
 Package: phylocorrpkg
-Title: Phylogenetic correlations across large trees.
+Title: Phylogenetic correlations across large trees
 Version: 1.0.0
 Authors@R:
       person(c("Benjamin", "Jean-Marie"), "Tremblay", role = c("aut", "cre"),
@@ -12,5 +12,5 @@ Description: Functional predictions from correlations across large phylogenetic
 Depends: R (>= 4.0.0)
 License: GPL-3
 Encoding: UTF-8
-Imports: methods, stats, utils, foreach, S4Vectors, reshape2
+Imports: stats, foreach, S4Vectors, reshape2
 RoxygenNote: 7.1.0

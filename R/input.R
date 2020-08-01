@@ -13,11 +13,11 @@ cleanData <- function(x, tree = NULL, minFamilyCount = 2, maxFamilyCount = nrow(
   genomeSums <- rowSums(x)
   if (any(famSums < minFamilyCount)) {
     message("Found families with fewer calls than the allowed minimum, these will be removed.")
-    x <- x[, famsums >= minFamilyCount]
+    x <- x[, famSums >= minFamilyCount]
   }
   if (any(famSums > maxFamilyCount)) {
     message("Found families with more calls than the allowed maximum, these will be removed.")
-    x <- x[, famsums <= maxFamilyCount]
+    x <- x[, famSums <= maxFamilyCount]
   }
   x
 }

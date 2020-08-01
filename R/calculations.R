@@ -57,7 +57,7 @@ calcHyperPPair <- function(x, y) {
 #' @export
 calcrHyperPPair <- function(x, y) {
   z <- getRuns(x, y)
-  calcHyperP(z$x, z$y)
+  calcHyperPPair(z$x, z$y)
 }
 
 #' @export
@@ -73,7 +73,7 @@ calcJCPair <- function(x, y) {
 #' @export
 calcrJCPair <- function(x, y) {
   z <- getRuns(x, y)
-  calcJC(z$x, z$y)
+  calcJCPair(z$x, z$y)
 }
 
 #' @export
