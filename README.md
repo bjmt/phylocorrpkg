@@ -4,7 +4,7 @@ The functions within this package have been provided so that one may make use of
 
 ## Data preparation
 
-The fst format allows individual columns to be accessed very quickly, making it the optimal storage solution. However this means saving data as a `data.frames`, as well as saving the row names separately.
+The `fst` format allows individual columns to be accessed very quickly, making it the optimal storage solution. However this means saving data as a `data.frames`, as well as saving the row names separately.
 
 
 ```r
@@ -82,4 +82,16 @@ annotations <- cleanAnnotations(annotations)
 PCC <- read_fst("PCC.fst")
 
 PCCdf <- mergeScoresAndAnnotations(PCC, annotations)
+PCCfun <- getProbMatchFunSingle(PCCdf, useMeanSmoothing = FALSE)
+
+x <- seq(from = -1, to = 1, by = 0.01)
+plot(x, PCCfun(x), type = "b", xlab = "PCC",
+    ylab = "Probability of a Matching Function")
+
+PCCPredictedProbs <- calcMatchingProbsSingle(PCC, PCCfun)
 ```
+
+If there too few data points near the upper range of scores, the probability prediction function can behave unexpectedly for high scores. Using smoothing can help greatly with this. Additionally, if none of the probabilities from actual scores approach 1 then setting a lower `maxProb` can help generate more realistic probabilities for higher scores. Visually inspecting the Score VS Probability plot as above can greatly aid in determining the best parameters to use in the `getProbMatchFunSingle()` function.
+
+For P-value type scores, it is recommend to transform them with `-log10()` before generating the probability prediction function.
+

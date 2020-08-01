@@ -1,3 +1,4 @@
+#' @export
 getRuns <- function(x, y) {
   z <- integer(length(x))
   z[x & y] <- 1
@@ -11,6 +12,7 @@ getRuns <- function(x, y) {
   list(x = x, y = y)
 }
 
+#' @export
 doParCalc <- function(x, FUN) {
   y <- foreach(i = seq_len(ncol(x))) %:%
     foreach(j = seq_len(ncol(x))[-seq_len(i)], .combine = "c") %dopar% {
@@ -25,19 +27,23 @@ doParCalc <- function(x, FUN) {
   y
 }
 
+#' @export
 calcPCC <- function(x) {
   cor(x)
 }
 
+#' @export
 calcPCCPair <- function(x, y) {
   cor(x, y)
 }
 
+#' @export
 calcrPCCPair <- function(x, y) {
   z <- getRuns(x, y)
   cor(z$x, z$y)
 }
 
+#' @export
 calcHyperPPair <- function(x, y) {
   fisher.test(
     matrix(c(
@@ -48,24 +54,29 @@ calcHyperPPair <- function(x, y) {
   )$p.value
 }
 
+#' @export
 calcrHyperPPair <- function(x, y) {
   z <- getRuns(x, y)
   calcHyperP(z$x, z$y)
 }
 
+#' @export
 calcOvPair <- function(x, y) {
   sum(x & y)
 }
 
+#' @export
 calcJCPair <- function(x, y) {
   sum(x & y) / sum(x | y)
 }
 
+#' @export
 calcrJCPair <- function(x, y) {
   z <- getRuns(x, y)
   calcJC(z$x, z$y)
 }
 
+#' @export
 calcOccDiff <- function(x) {
   z <- colSums(x)
   z <- outer(z, z, FUN = function(x, y) abs(x - y))
@@ -73,6 +84,7 @@ calcOccDiff <- function(x) {
   z
 }
 
+#' @export
 calcOccDiffPair <- function(x, y) {
   abs(sum(x) - sum(y))
 }

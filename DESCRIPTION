@@ -12,4 +12,5 @@ Description: Functional predictions from correlations across large phylogenetic
 Depends: R (>= 4.0.0)
 License: GPL-3
 Encoding: UTF-8
-Imports: methods, stats, utils, foreach, S4Vectors, reshape2, dplyr
+Imports: methods, stats, utils, foreach, S4Vectors, reshape2
+RoxygenNote: 7.1.0

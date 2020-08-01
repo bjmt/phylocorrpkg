@@ -1,3 +1,4 @@
+#' @export
 cleanData <- function(x, tree = NULL, minFamilyCount = 2, maxFamilyCount = nrow(x) - 1) {
   if (!is.matrix(x)) stop("Input must be a matrix")
   if (!is.numeric(x) && !is.logical(x)) stop("Input must be a numeric or logical matrix")
@@ -21,9 +22,10 @@ cleanData <- function(x, tree = NULL, minFamilyCount = 2, maxFamilyCount = nrow(
   x
 }
 
-cleanAnnotations <- function(annotations) {
-  colnames(annotations) <- c("Fam", "Annotation")
-  pairs <- as.data.frame(t(combn(annotations$Fam, 2)))
-  colnames(pairs) <- c("Fam1", "Fam2")
-  pairs
+#' @export
+cleanAnnotations <- function(annotations, annoIsSecondCol = TRUE) {
+  if (annoIsSecondCol)
+    lapply(split(annotations, annotations[[1]]), function(x) x[[2]])
+  else
+    lapply(split(annotations, annotations[[2]]), function(x) x[[1]])
 }
