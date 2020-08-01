@@ -1,6 +1,6 @@
 # Phylocorrelate -- the R package
 
-The functions within this package have been provided so that one may make use of the methods used to generate the Phylocorrelate database.
+The functions within this package have been provided so that one may make use of the methods which were used to generate the Phylocorrelate database.
 
 ## Data preparation
 
