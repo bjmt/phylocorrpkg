@@ -35,6 +35,8 @@ library(doSNOW)
 cl <- makeCluster(8)
 registerDoSNOW(cl)
 
+# The stats::cor function can be used directly without any parallelisation, as it is
+# quite efficient
 PCC <- calcPCC(input)
 write_fst(as.data.frame(PCC), "PCC.fst")
 rm(PCC)
@@ -63,6 +65,7 @@ Ov <- doParCalc(input, calcOvPair)
 write_fst(as.data.frame(Ov), "Ov.fst")
 rm(Ov)
 
+# Parallelisation is not required, as this is an easy calculation
 OccDiff <- calcOccDiff(input)
 write_fst(as.data.frame(OccDiff), "OccDiff.fst")
 rm(OccDiff)
