@@ -11,20 +11,19 @@ The `fst` format allows individual columns to be accessed very quickly, making i
 library(phylocorrpkg)
 library(fst)
 library(ape)
-library(readr)
 
 tree <- read.tree("tree")
 input <- read.table("input", header = TRUE, quote = "")
 
 input <- cleanData(input, tree)
 
-write_lines(rownames(input), "genomes.txt")
+writeLines(rownames(input), "genomes.txt")
 fst::write_fst(as.data.frame(input), "Table.fst")
 ```
 
 ## Score calculation
 
-Depending on the number of families, these calculations can consume a lot of RAM and CPU time. Parallelisation can be achieved using the `doParCalc()` function, though this is optional; the function will still work even if no cluster is registered. In order not to run out of RAM, objects are immediately written to disk and deleted from memory.
+Depending on the number of families, these calculations can consume a lot of RAM and CPU time. Parallelisation can be achieved using the `doParCalc()` function, though this is optional; the function will still work even if no cluster is registered. In order not to run out of RAM, it is recommended that objects are immediately written to disk and deleted from memory.
 
 ```r
 library(phylocorrpkg)
