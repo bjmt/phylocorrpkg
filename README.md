@@ -13,7 +13,7 @@ install.packages("BiocManager")
 BiocManager::install("bjmt/phylocorrpkg")
 ```
 
-Install the extra packages used in the following guide:
+Install the extra packages used in this guide:
 
 ```r
 install.packages(c("ape", "doSNOW", "fst", "plot.matrix"))
