@@ -146,3 +146,5 @@ plot(CombinedMatrix[nrow(CombinedMatrix):1, ], breaks = 10,
 
 CombinedPredicted <- calcMatchingProbsDouble(rHyperP, OccDiff, CombinedMatrix)
 ```
+
+There are two opportunities for smoothing when generating the final probability prediction matrix: in `getProbMatchDfDouble()` and `getProbMatchMatrixDouble()`. The former function is a 2D kernel function; here you can decide the size of the final matrix (`len1`, `len2`) and the bandwidth values. In the latter function, an optional mean smoothing step can be used (`useMeanSmoothing = TRUE`) controlled by `windowSize1` and `windowSize2`. Visually inspecting the resulting matrix with the above code can greatly help here.
