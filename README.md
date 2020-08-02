@@ -2,6 +2,23 @@
 
 The functions within this package have been provided so that one may make use of the methods which were used to generate the Phylocorrelate database.
 
+## Installation
+
+Warning: this package contains C++ code which must be compiled.
+
+Install the package and its dependencies:
+
+```r
+install.packages("BiocManager")
+BiocManager::install("bjmt/phylocorrpkg")
+```
+
+Install the extra packages used in the following guide:
+
+```r
+install.packages(c("ape", "doSNOW", "fst", "plot.matrix"))
+```
+
 ## Data preparation
 
 The `fst` format allows individual columns to be accessed very quickly, making it the optimal storage solution. However this means saving data as a `data.frames`, as well as saving the row names separately (if needed; the score matrices have identical column and row names, making this unnecessary).
