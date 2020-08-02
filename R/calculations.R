@@ -13,23 +13,23 @@ getRuns <- function(x, y) {
 }
 
 #' @export
-doParCalc <- function(x, FUN) {
-  y <- foreach(i = seq_len(ncol(x))) %:%
-    foreach(j = seq_len(ncol(x))[-seq_len(i)], .combine = "c") %dopar% {
-      FUN(x[, i], x[, j])
+doParCalc <- function(z, FUN) {
+  y <- foreach(i = seq_len(ncol(z))) %:%
+    foreach(j = seq_len(ncol(z))[-seq_len(i)], .combine = "c") %dopar% {
+      FUN(z[, i], z[, j])
     }
   for (i in seq_along(y)) {
-    y[[i]] <- c(rep(NA_real_, ncol(x) - length(y[[i]])), y[[i]])
+    y[[i]] <- c(rep(NA_real_, ncol(z) - length(y[[i]])), y[[i]])
   }
-  y <- matrix(unlist(y), ncol = ncol(x), dimnames = list(colnames(x), colnames(x)))
+  y <- matrix(unlist(y), ncol = ncol(z), dimnames = list(colnames(z), colnames(z)))
   y <- as.matrix(as.dist(y))
   diag(y) <- NA
   y
 }
 
 #' @export
-calcPCC <- function(x) {
-  cor(x)
+calcPCC <- function(z) {
+  cor(z)
 }
 
 #' @export
@@ -77,10 +77,10 @@ calcrJCPair <- function(x, y) {
 }
 
 #' @export
-calcOccDiff <- function(x) {
-  z <- colSums(x)
+calcOccDiff <- function(z) {
+  z <- colSums(z)
   z <- outer(z, z, FUN = function(x, y) abs(x - y))
-  dimnames(z) <- list(colnames(x), colnames(x))
+  dimnames(z) <- list(colnames(z), colnames(z))
   z
 }
 

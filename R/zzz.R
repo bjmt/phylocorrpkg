@@ -9,6 +9,9 @@
 #'
 #' @importFrom stats fisher.test cor as.dist approxfun
 #' @importFrom S4Vectors Rle runValue
-#' @importFrom reshape2 melt
+#' @importFrom reshape2 melt acast
 #' @importFrom foreach foreach %:% %dopar%
+#' @importFrom KernSmooth bkde2D
+#' @importFrom raster focal raster
+#' @useDynLib phylocorrpkg
 NULL

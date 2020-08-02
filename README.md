@@ -100,13 +100,14 @@ If there too few data points near the upper range of scores, the probability pre
 
 ## Matching annotation probability functions from two sets of scores
 
-To increase the prediction accuracy, the probability prediction function can be generated from two different scores.
+To increase the prediction accuracy, the probability prediction function can be generated from two different scores. Instead of a probability prediction function, this returns a 2D matrix of probabilities.
 
 Note: for P-value type scores, it is recommend to transform them with `-log10()` before generating the probability prediction function. Also make sure to change any infinite values (resulting from P-values equalling zero) to a suitable high number.
 
 ```r
 library(phylocorrpkg)
 library(fst)
+library(plot.matrix)
 
 annotations <- read.table("annotations", header = TRUE, quote = "")
 annotations <- cleanAnnotations(annotations)
@@ -120,4 +121,11 @@ OccDiff <- read_fst("OccDiff.fst")
 rHyperPdf <- mergeScoresAndAnnotations(rHyperP, annotations)
 OccDiffdf <- mergeScoresAndAnnotations(OccDiff, annotations)
 
+CombinedDf <- getProbMatchDfDouble(rHyperPdf, OccDiffdf)
+CombinedMatrix <- getProbMatchMatrixDouble(CombinedDf)
+
+plot(CombinedMatrix[nrow(CombinedMatrix):1, ], breaks = 10,
+    xlab = "OccDiff", ylab = "rHyperP")
+
+CombinedPredicted <- calcMatchingProbsDouble(rHyperP, OccDiff, CombinedMatrix)
 ```

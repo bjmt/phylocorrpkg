@@ -39,9 +39,77 @@ getProbMatchFunSingle <- function(merged, highScoreIsBest = TRUE, maxProb = 1,
 }
 
 #' @export
-getProbMatchFunDouble <- function(df1, df2, highScoreIsBest1 = TRUE,
-  highScoreIsBest2 = TRUE, maxProb1 = 1, maxProb1 = 1) {
+getProbMatchDfDouble <- function(df1, df2, len1 = 21, len2 = 21,
+  lims1 = range(df1$Score), lims2 = range(df2$Score),
+  bw1Match = MASS::bandwidth.nrd(df1$Score[df1$MatchingAnno]) * 2,
+  bw1NoMatch = MASS::bandwidth.nrd(df1$Score[!df1$MatchingAnno]) * 2,
+  bw2Match = MASS::bandwidth.nrd(df2$Score[df2$MatchingAnno]) * 2,
+  bw2NoMatch = MASS::bandwidth.nrd(df2$Score[!df2$MatchingAnno]) * 2) {
 
+  df1$Score[df1$Score > lims1[2]] <- lims1[2]
+  df1$Score[df1$Score < lims1[1]] <- lims1[1]
+  df2$Score[df2$Score > lims2[2]] <- lims2[2]
+  df2$Score[df2$Score < lims2[1]] <- lims2[1]
+
+  dfTrue <- as.matrix(cbind(df1$Score[df1$MatchingAnno],
+      df2$Score[df2$MatchingAnno]))
+  dfFalse <- as.matrix(cbind(df1$Score[!df1$MatchingAnno],
+      df2$Score[!df2$MatchingAnno]))
+
+  seq1 <- seq(from = lims1[1], to = lims1[2], length.out = len1)
+  seq2 <- seq(from = lims2[1], to = lims2[2], length.out = len2)
+
+  binsTrue1 <- cut(dfTrue[, 1], seq1, include.lowest = TRUE)
+  binsTrue2 <- cut(dfTrue[, 2], seq2, include.lowest = TRUE)
+  binsFalse1 <- cut(dfFalse[, 1], seq1, include.lowest = TRUE)
+  binsFalse2 <- cut(dfFalse[, 2], seq2, include.lowest = TRUE)
+
+  kernTrue <- bkde2D(dfTrue, c(bw1Match, bw2Match), c(len1, len2),
+    list(lims1, lims2))
+  kernFalse <- bkde2D(dfTrue, c(bw1NoMatch, bw2NoMatch), c(len1, len2),
+    list(lims1, lims2))
+
+  kernTrueNorm <- (kernTrue$fhat / sum(kernTrue$fhat)) * nrow(dfTrue)
+  kernFalseNorm <- (kernFalse$fhat / sum(kernFalse$fhat)) * nrow(dfFalse)
+
+  kernRatio <- matrix(kernTrueNorm / (kernFalseNorm + kernTrueNorm),
+    nrow(kernTrue$fhat), dimnames = list(seq1, seq2))
+
+  dfPMF <- expand.grid(x = seq1, y = seq2)
+
+  xInd <- match(as.character(dfPMF$x), rownames(kernRatio)) - 1
+  yInd <- match(as.character(dfPMF$y), colnames(kernRatio)) - 1
+
+  kernRatio[is.na(kernRatio)] <- 0
+  kernRatioVec <- as.vector(kernRatio)
+  kernRatioVec[is.na(kernRatioVec)] <- 0
+  kernTrueNormVec <- as.vector(kernTrueNorm)
+  kernFalseNormVec <- as.vector(kernFalseNorm)
+
+  TFcounts <- calcCounts(xInd, yInd, kernRatio, kernRatioVec, kernTrueNormVec,
+    kernFalseNormVec)
+
+  dfPMF$CountTrue <- TFcounts$Tcount
+  dfPMF$CountFalse <- TFcounts$Fcount
+  dfPMF$CountTotal <- dfPMF$CountTrue + dfPMF$CountFalse
+  dfPMF$MatchProb <- dfPMF$CountTrue / dfPMF$CountTotal
+
+  dfPMF <- dfPMF[order(dfPMF$CountTotal, dfPMF$MatchProb), ]
+
+}
+
+#' @export
+getProbMatchMatrixDouble <- function(CombinedDf, useMeanSmoothing = FALSE,
+  windowSize1 = 3, windowSize2 = 3) {
+  CombinedMatrix <- acast(CombinedDf, x ~ y, value.var = "MatchProb")
+  if (useMeanSmoothing) {
+    CombinedRaster <- raster(CombinedMatrix)
+    CombinedSmoothed <- as.matrix(focal(CombinedRaster,
+        matrix(1, windowSize1, windowSize2), mean, pad = FALSE))
+    dimnames(CombinedSmoothed) <- dimnames(CombinedMatrix)
+    CombinedMatrix <- CombinedSmoothed
+  }
+  CombinedMatrix
 }
 
 #' @export
@@ -50,4 +118,26 @@ calcMatchingProbsSingle <- function(scores, predFUN) {
   rownames(scores) <- colnames(scores)
   diag(scores) <- NA
   matrix(predFUN(scores), nrow = nrow(scores), dimnames = dimnames(scores))
+}
+
+#' @export
+calcMatchingProbsDouble <- function(scores1, scores2, predMatrix) {
+  cuts1 <- as.numeric(rownames(predMatrix))
+  cuts1 <- c(-Inf, cuts1[-1] - diff(cuts1) / 2, Inf)
+  cuts2 <- as.numeric(colnames(predMatrix))
+  cuts2 <- c(-Inf, cuts2[-1] - diff(cuts2) / 2, Inf)
+  scores1 <- as.matrix(scores1)
+  scores2 <- as.matrix(scores2)
+  rownames(scores1) <- colnames(scores1)
+  rownames(scores2) <- colnames(scores2)
+  scores1[upper.tri(scores1)] <- NA
+  diag(scores1) <- NA
+  scores2[upper.tri(scores2)] <- NA
+  diag(scores2) <- NA
+  scores1 <- melt(scores1, na.rm = TRUE)
+  scores2 <- melt(scores2, na.rm = TRUE)
+  ind1 <- findInterval(scores1[[3]], cuts1) - 1
+  ind2 <- findInterval(scores2[[3]], cuts2) - 1
+  data.frame(Fam1 = scores1[[1]], Fam2 = scores1[[2]],
+    PMF = calcPMF2d(ind1, ind2, predMatrix))
 }
