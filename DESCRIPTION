@@ -15,3 +15,4 @@ Encoding: UTF-8
 Imports: stats, foreach, S4Vectors, reshape2, MASS, KernSmooth, Rcpp, raster
 LinkingTo: Rcpp
 RoxygenNote: 7.1.0
+Roxygen: list(markdown = TRUE)

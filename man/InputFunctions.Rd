@@ -11,13 +11,13 @@ cleanData(x, tree = NULL, minFamilyCount = 2, maxFamilyCount = nrow(x) - 1)
 cleanAnnotations(annotations, annoIsSecondCol = TRUE)
 }
 \arguments{
-\item{x}{A `matrix` or `data.frame` with family/gene/protein IDs as column
+\item{x}{A \code{matrix} or \code{data.frame} with family/gene/protein IDs as column
 names, and tree tip names as row names. The contents of the matrix should be
 logical presence-absence data, though integer/numeric data can be used and will
 be converted to logical.}
 
-\item{tree}{A [ape::phylo-class] type tree object. The tip labels must be identical
-to the row names of the input matrix `x`.}
+\item{tree}{A \link[ape:phylo-class]{ape::phylo} type tree object. The tip labels must be identical
+to the row names of the input matrix \code{x}.}
 
 \item{minFamilyCount}{The minimum number of presence calls a family/gene/protein
 must have in order not to be filtered out. This helps greatly with increasing
@@ -28,17 +28,17 @@ can have in order not to be filtered out. This helps remove those which are
 present in the entire tree, and thus do not contribute to function prediction
 accuracy.}
 
-\item{annotations}{A `data.frame` with two columns. The first is a character vector
-of family/gene/protein IDs (matching the column names of the input `x`), and
+\item{annotations}{A \code{data.frame} with two columns. The first is a character vector
+of family/gene/protein IDs (matching the column names of the input \code{x}), and
 the second column is a character vector of annotations of any type. One
 family/gene/protein can have multiple annotations, present as additional rows.}
 
-\item{annoIsSecondCol}{If the columns are switched then set this to `FALSE`.}
+\item{annoIsSecondCol}{If the columns are switched then set this to \code{FALSE}.}
 }
 \value{
-For [cleanData()], a presence-absence logical matrix.
+For \code{\link[=cleanData]{cleanData()}}, a presence-absence logical matrix.
 
-   For [cleanAnnotations()], a list of family/gene/protein IDs to annotations.
+For \code{\link[=cleanAnnotations]{cleanAnnotations()}}, a list of family/gene/protein IDs to annotations.
 }
 \description{
 These functions help in cleaning up and preparing the input presence-absence
