@@ -1,3 +1,38 @@
+#' Probability prediction functions.
+#'
+#' Functions to be used to generate the prediction functions/matrices.
+#'
+#' @param scores
+#' @param annotations
+#' @param highScoreIsBest
+#' @param merged
+#' @param maxProb
+#' @param useMeanSmoothing
+#' @param windowSize
+#' @param df1
+#' @param df2
+#' @param len1
+#' @param len2
+#' @param lims1
+#' @param lims2
+#' @param bw1Match
+#' @param bw1NoMatch
+#' @param bw2Match
+#' @param bw2NoMatch
+#' @param CombinedDf
+#' @param windowSize1
+#' @param windowSize2
+#' @param scores1
+#' @param scores2
+#' @param predFUN
+#' @param predMatrix
+#'
+#' @return
+#'
+#' @author Benjamin Jean-Marie Tremblay, \email{b2tremblay@@uwaterloo.ca}
+#' @name ProbabilityFunctions
+
+#' @rdname ProbabilityFunctions
 #' @export
 mergeScoresAndAnnotations <- function(scores, annotations, highScoreIsBest = TRUE) {
   scores <- as.matrix(scores)
@@ -15,6 +50,7 @@ mergeScoresAndAnnotations <- function(scores, annotations, highScoreIsBest = TRU
   scores2
 }
 
+#' @rdname ProbabilityFunctions
 #' @export
 getProbMatchFunSingle <- function(merged, highScoreIsBest = TRUE, maxProb = 1,
   useMeanSmoothing = FALSE, windowSize = max(1, round(0.0001 * nrow(merged)))) {
@@ -38,6 +74,7 @@ getProbMatchFunSingle <- function(merged, highScoreIsBest = TRUE, maxProb = 1,
     approxfun(Scores, ProbMatch, yleft = maxProb, yright = 0)
 }
 
+#' @rdname ProbabilityFunctions
 #' @export
 getProbMatchDfDouble <- function(df1, df2, len1 = 21, len2 = 21,
   lims1 = range(df1$Score), lims2 = range(df2$Score),
@@ -98,6 +135,7 @@ getProbMatchDfDouble <- function(df1, df2, len1 = 21, len2 = 21,
 
 }
 
+#' @rdname ProbabilityFunctions
 #' @export
 getProbMatchMatrixDouble <- function(CombinedDf, useMeanSmoothing = FALSE,
   windowSize1 = 3, windowSize2 = 3) {
@@ -112,6 +150,7 @@ getProbMatchMatrixDouble <- function(CombinedDf, useMeanSmoothing = FALSE,
   CombinedMatrix
 }
 
+#' @rdname ProbabilityFunctions
 #' @export
 calcMatchingProbsSingle <- function(scores, predFUN) {
   scores <- as.matrix(scores)
@@ -120,6 +159,7 @@ calcMatchingProbsSingle <- function(scores, predFUN) {
   matrix(predFUN(scores), nrow = nrow(scores), dimnames = dimnames(scores))
 }
 
+#' @rdname ProbabilityFunctions
 #' @export
 calcMatchingProbsDouble <- function(scores1, scores2, predMatrix) {
   cuts1 <- as.numeric(rownames(predMatrix))
