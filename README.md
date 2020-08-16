@@ -6,7 +6,7 @@ The functions within this package have been provided so that one may make use of
 
 Warning: this package contains C++ code which must be compiled. This means installing [Rtools](https://cran.r-project.org/bin/windows/Rtools/) for Windows, and [clang](https://cran.r-project.org/bin/macosx/tools/) for Mac.
 
-Install the package and its dependencies:
+This package requires R version 3.5.0 or later. To install the package and its dependencies:
 
 ```r
 install.packages("BiocManager")
