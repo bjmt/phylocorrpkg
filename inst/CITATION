@@ -1,0 +1,15 @@
+citHeader("To cite phylocorrpkg in publications use:")
+
+citEntry(
+  entry    = "Article",
+  title    = "PhyloCorrelate: prediction of gene-gene functional associations through large-scale co-occurrence analysis.",
+  author   = "Tremblay et al.",
+  journal  = "Submitted.",
+  year     = 2020,
+  url      = "https//phylocorrelate.uwaterloo.ca",
+  textVersion = paste(
+    "Tremblay et al.",
+    "PhyloCorrelate: prediction of gene-gene functional associations through large-scale co-occurrence analysis.",
+    "Submitted."
+  )
+)

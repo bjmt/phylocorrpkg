@@ -18,7 +18,6 @@
 #'
 #' @author Benjamin Jean-Marie Tremblay, \email{b2tremblay@@uwaterloo.ca}
 #' @name CalculationFunctions
-
 #' @rdname CalculationFunctions
 #' @export
 getRuns <- function(x, y) {
