@@ -41,7 +41,18 @@ fst::write_fst(as.data.frame(input), "Table.fst")
 
 ## Score calculation
 
-Depending on the number of families, these calculations can consume a lot of RAM and CPU time. Parallelisation can be achieved using the `doParCalc()` function, though this is optional; the function will still work even if no cluster is registered. In order not to run out of RAM, it is recommended that objects are immediately written to disk and deleted from memory.
+Depending on the number of families, these calculations can consume a lot of RAM and CPU time. Parallelisation can be achieved using the `doParCalc()` function, though this is optional; the function will still work even if no cluster is registered. In order not to run out of RAM, it is recommended that objects are immediately written to disk and deleted from memory. There are several calculations available:
+
+- Pearson correlation coefficient (PCC): `calcPCC()`
+- Runs-adjusted PCC (rPCC): `calcrPCCPair()`
+- Jaccard Coefficient (JC): `calcJCPair()`
+- Runs-adjusted JC (rJC): `calcrJCPair()`
+- Hypergeometric P-value (HyperP): `calcHyperPPair()`
+- Runs-adjusted HyperP (rHyperP): `calcrHyperPPair()`
+- Overlap between pairs (Ov): `calcOvPair()`
+- Difference of occurrences between pairs (OccDiff): `calcOccDiff()`
+
+You can also create your own comparison function: all it needs to do is be able to take two logical vectors and generate a single numerical score. You can use the `doParCalc()` function to apply this function to all pairs in the input matrix.
 
 ```r
 library(phylocorrpkg)
@@ -92,6 +103,8 @@ rm(OccDiff)
 
 This can be done with any annotation type. All that's needed is a `data.frame` with two columns: the first one with family names (matching those of the input column names), and the second with the annotation of interest. Families can have multiple annotations, appearing as duplicate rows. The probability functions can be obtained from any of the scores previously calculated. This probability prediction function can then be used to generate probabilities for the entire input score set.
 
+In this example workflow, function match probabilities will be calculated using PCC scores.
+
 ```r
 library(phylocorrpkg)
 library(fst)
@@ -120,6 +133,8 @@ If there too few data points near the upper range of scores, the probability pre
 To increase the prediction accuracy, the probability prediction function can be generated from two different scores. Instead of a probability prediction function, this returns a 2D matrix of probabilities.
 
 Note: for P-value type scores, it is recommend to transform them with `-log10()` before generating the probability prediction function. Also make sure to change any infinite values (resulting from P-values equalling zero) to a suitable high number.
+
+In this example workflow, function match probabilities will be calculated from rHyperP and OccDiff scores.
 
 ```r
 library(phylocorrpkg)
