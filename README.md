@@ -9,7 +9,7 @@ Warning: this package contains C++ code which must be compiled. This means insta
 This package requires R version 3.5.0 or later. To install the package and its dependencies:
 
 ```r
-install.packages("BiocManager")
+install.packages(c("remotes", "BiocManager"))
 BiocManager::install("bjmt/phylocorrpkg")
 ```
 
