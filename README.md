@@ -2,6 +2,12 @@
 
 The functions within this package have been provided so that one may make use of the methods which were used to generate the Phylocorrelate database.
 
+Phylocorrelate is a tool that detects pairs of gene/protein families with similar phylogenetic distributions. Gene co-occurrence is important to detect as it may suggest an interaction between the genes, membership in the same pathway or complex, or more general functional associations or dependencies.
+
+The online web-server ([PhyloCorrelate](phylocorrelate.uwaterloo.ca)) contains precomputed correlations for 27,372 gene families across 28,315 species, and uses the GTDB bacterial tree and gene occurrences from AnnoTree including entries from KEGG, PFAM, and TIGRFAM.
+
+This R package extends the functionality of PhyloCorrelate, so that it can be used with any custom tree and dataset of genes (binary presence/absence matrix).
+
 ## Installation
 
 Warning: this package contains C++ code which must be compiled. This means installing [Rtools](https://cran.r-project.org/bin/windows/Rtools/) for Windows, and [clang](https://cran.r-project.org/bin/macosx/tools/) for Mac.
