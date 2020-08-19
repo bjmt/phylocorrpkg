@@ -13,5 +13,4 @@
 #' @importFrom foreach foreach %:% %dopar%
 #' @importFrom KernSmooth bkde2D
 #' @importFrom raster focal raster
-#' @useDynLib phylocorrpkg
 NULL

@@ -156,8 +156,8 @@ getProbMatchDfDouble <- function(df1, df2, len1 = 21, len2 = 21,
 
   dfPMF <- expand.grid(x = seq1, y = seq2)
 
-  xInd <- match(as.character(dfPMF$x), rownames(kernRatio)) - 1
-  yInd <- match(as.character(dfPMF$y), colnames(kernRatio)) - 1
+  xInd <- match(as.character(dfPMF$x), rownames(kernRatio))
+  yInd <- match(as.character(dfPMF$y), colnames(kernRatio))
 
   kernRatio[is.na(kernRatio)] <- 0
   kernRatioVec <- as.vector(kernRatio)
@@ -175,6 +175,17 @@ getProbMatchDfDouble <- function(df1, df2, len1 = 21, len2 = 21,
 
   dfPMF <- dfPMF[order(dfPMF$CountTotal, dfPMF$MatchProb), ]
 
+}
+
+calcCounts <- function(xInd, yInd, kernRatio, kernRatioVec,
+  kernTrueNormVec, kernFalseNormVec) {
+  Tcounts <- Fcounts <- numeric(length(kernRatioVec))
+  for (i in seq_len(length(kernRatioVec))) {
+    rInd <- kernRatioVec >= kernRatio[xInd[i], yInd[i]]
+    Tcounts[i] <- sum(kernTrueNormVec[rInd])
+    Fcounts[i] <- sum(kernFalseNormVec[rInd])
+  }
+  list(Tcount = Tcounts, Fcount = Fcounts)
 }
 
 #' @rdname ProbabilityFunctions
@@ -218,10 +229,10 @@ calcMatchingProbsDouble <- function(scores1, scores2, predMatrix) {
   diag(scores2) <- NA
   scores1 <- melt(scores1, na.rm = TRUE)
   scores2 <- melt(scores2, na.rm = TRUE)
-  ind1 <- findInterval(scores1[[3]], cuts1) - 1
-  ind2 <- findInterval(scores2[[3]], cuts2) - 1
+  ind1 <- findInterval(scores1[[3]], cuts1)
+  ind2 <- findInterval(scores2[[3]], cuts2)
   answer <- data.frame(Fam1 = scores1[[1]], Fam2 = scores1[[2]],
-    PMF = calcPMF2d(ind1, ind2, predMatrix))
+    PMF = predMatrix[cbind(ind1, ind2)])
   out <- acast(answer, Fam1 ~ Fam2, value.var = "PMF")
   diag(out) <- NA
   outt <- t(out)

@@ -12,7 +12,6 @@ Description: Functional predictions from correlations across large phylogenetic
 Depends: R (>= 3.5.0)
 License: GPL-3
 Encoding: UTF-8
-Imports: stats, foreach, S4Vectors, reshape2, MASS, KernSmooth, Rcpp, raster
-LinkingTo: Rcpp
+Imports: stats, foreach, S4Vectors, reshape2, MASS, KernSmooth, raster
 RoxygenNote: 7.1.0
 Roxygen: list(markdown = TRUE)
