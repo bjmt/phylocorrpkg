@@ -175,6 +175,8 @@ getProbMatchDfDouble <- function(df1, df2, len1 = 21, len2 = 21,
 
   dfPMF <- dfPMF[order(dfPMF$CountTotal, dfPMF$MatchProb), ]
 
+  dfPMF
+
 }
 
 calcCounts <- function(xInd, yInd, kernRatio, kernRatioVec,
