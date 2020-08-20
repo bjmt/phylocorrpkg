@@ -67,6 +67,8 @@ library(doSNOW)
 cl <- makeCluster(8)
 registerDoSNOW(cl)
 
+input <- read_fst("Table.fst")
+
 # The stats::cor function can be used directly without any parallelisation, as it is
 # quite efficient
 PCC <- calcPCC(input)
