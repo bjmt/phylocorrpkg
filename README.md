@@ -41,6 +41,8 @@ writeLines(rownames(input), "genomes.txt")
 fst::write_fst(as.data.frame(input), "Table.fst")
 ```
 
+If you wish, you can also use the input tables used to generate the PhyloCorrelate data. They can be downloaded [here](https://zenodo.org/record/3993422). The data preparation stage has already been performed on these files, and you can use them directly in the next section. The GO:BP/Pathway annotation data can also be downloaded and used in the annotation cleaning and probability matching section. It is recommended to use the TIGRFAM dataset, as the PFAM and KO datasets are much larger and will require much more intensive computation.
+
 ## Score calculation
 
 Depending on the number of families, these calculations can consume a lot of RAM and CPU time. Parallelisation can be achieved using the `doParCalc()` function, though this is optional; the function will still work even if no cluster is registered. In order not to run out of RAM, it is recommended that objects are immediately written to disk and deleted from memory. There are several calculations available:
