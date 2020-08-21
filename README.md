@@ -21,6 +21,16 @@ Install the extra packages used in this guide:
 install.packages(c("ape", "doSNOW", "fst", "plot.matrix"))
 ```
 
+The functions within the package are divided into three categories. To see the manual pages for each:
+
+```r
+library(phylocorrpkg)
+
+?InputFunctions
+?CalculationFunctions
+?ProbabilityFunctions
+```
+
 ## Data preparation
 
 The `fst` format allows individual columns to be accessed very quickly, making it the optimal storage solution. However this means saving data as a `data.frames`, as well as saving the row names separately (if needed; the score matrices have identical column and row names, making this unnecessary).
@@ -69,8 +79,8 @@ registerDoSNOW(cl)
 
 input <- read_fst("Table.fst")
 
-# The stats::cor function can be used directly without any parallelisation, as it is
-# quite efficient
+# calcPCC() is merely a wrapper for the stats::cor function which can be
+# used directly without any parallelisation, as it is quite efficient
 PCC <- calcPCC(input)
 write_fst(as.data.frame(PCC), "PCC.fst")
 rm(PCC)
@@ -99,7 +109,8 @@ Ov <- doParCalc(input, calcOvPair)
 write_fst(as.data.frame(Ov), "Ov.fst")
 rm(Ov)
 
-# Parallelisation is not required, as this is an easy calculation
+# For calcOccDiff() parallelisation is not required, as this is a simple
+# calculation
 OccDiff <- calcOccDiff(input)
 write_fst(as.data.frame(OccDiff), "OccDiff.fst")
 rm(OccDiff)

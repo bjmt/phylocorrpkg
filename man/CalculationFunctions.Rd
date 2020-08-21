@@ -54,8 +54,12 @@ calculations, optionally in parallel.}
 \value{
 For \code{\link[=getRuns]{getRuns()}}: a list of \code{x} and \code{y}, runs-adjusted.
 
-For all other functions: either a single value if comparing two columns,
-or a matrix of values if comparing all-by-all.
+For \code{\link[=calcPCCPair]{calcPCCPair()}}, \code{\link[=calcrPCCPair]{calcrPCCPair()}}, \code{\link[=calcrHyperPPair]{calcrHyperPPair()}},
+\code{\link[=calcOvPair]{calcOvPair()}}, \code{\link[=calcJCPair]{calcJCPair()}}, \code{\link[=calcrJCPair]{calcrJCPair()}}, \code{\link[=calcOccDiffPair]{calcOccDiffPair()}}: a
+single numeric score.
+
+For \code{\link[=doParCalc]{doParCalc()}}, \code{\link[=calcPCC]{calcPCC()}}, \code{\link[=calcOccDiff]{calcOccDiff()}}: a matrix of numeric
+scores, resulting from an all-against-all comparison.
 }
 \description{
 Comparison functions to calculate the various metrics on the presence-absence

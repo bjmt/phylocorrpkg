@@ -13,11 +13,16 @@
 #' @return
 #'    For [getRuns()]: a list of `x` and `y`, runs-adjusted.
 #'
-#'    For all other functions: either a single value if comparing two columns,
-#'    or a matrix of values if comparing all-by-all.
+#'    For [calcPCCPair()], [calcrPCCPair()], [calcrHyperPPair()], 
+#'    [calcOvPair()], [calcJCPair()], [calcrJCPair()], [calcOccDiffPair()]: a
+#'    single numeric score.
+#'
+#'    For [doParCalc()], [calcPCC()], [calcOccDiff()]: a matrix of numeric
+#'    scores, resulting from an all-against-all comparison.
 #'
 #' @author Benjamin Jean-Marie Tremblay, \email{b2tremblay@@uwaterloo.ca}
 #' @name CalculationFunctions
+
 #' @rdname CalculationFunctions
 #' @export
 getRuns <- function(x, y) {
