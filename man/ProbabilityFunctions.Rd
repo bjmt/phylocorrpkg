@@ -52,8 +52,8 @@ calcMatchingProbsDouble(scores1, scores2, predMatrix)
 
 \item{highScoreIsBest}{Whether the score is one where higher values represent
 better scores. An example of when this is true would be the Jaccard
-coefficient, and false would be P-values (though it is strongly recommended
-to \code{-log10()} transform P-values in order to obtain a linear range of scores).}
+coefficient, and false would be \code{log10()} transformed P-values (though it
+is recommended to flip the range by using \code{-log10()} instead).}
 
 \item{merged}{The output of \code{\link[=mergeScoresAndAnnotations]{mergeScoresAndAnnotations()}}.}
 

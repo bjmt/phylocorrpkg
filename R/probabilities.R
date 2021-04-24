@@ -7,8 +7,8 @@
 #'    [cleanAnnotations()].
 #' @param highScoreIsBest Whether the score is one where higher values represent
 #'    better scores. An example of when this is true would be the Jaccard
-#'    coefficient, and false would be P-values (though it is strongly recommended
-#'    to `-log10()` transform P-values in order to obtain a linear range of scores).
+#'    coefficient, and false would be `log10()` transformed P-values (though it
+#'    is recommended to flip the range by using `-log10()` instead).
 #' @param merged The output of [mergeScoresAndAnnotations()].
 #' @param maxProb What is the max possible predicted probability? If the
 #'    available scores do not predict anywhere near 100%, it may be worthwhile
