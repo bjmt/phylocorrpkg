@@ -2,14 +2,15 @@ citHeader("To cite phylocorrpkg in publications use:")
 
 citEntry(
   entry    = "Article",
-  title    = "PhyloCorrelate: prediction of gene-gene functional associations through large-scale co-occurrence analysis.",
-  author   = "Tremblay et al.",
-  journal  = "Submitted.",
-  year     = 2020,
+  title    = "PhyloCorrelate: inferring bacterial gene-gene functional associations through large-sclae phylogenetic profiling.",
+  author   = "Benjamin JM Tremblay and Briallen Lobb and Andrew C Doxey",
+  journal  = "Bioinformatics",
+  volume   = "37",
+  number   = "1",
+  pages    = "17--22",
+  year     = 2021,
   url      = "https//phylocorrelate.uwaterloo.ca",
   textVersion = paste(
-    "Tremblay et al.",
-    "PhyloCorrelate: prediction of gene-gene functional associations through large-scale co-occurrence analysis.",
-    "Submitted."
+    "Tremblay, B.J.M., Lobb, B., and Doxey, A.C. (2021). PhyloCorrelate: inferring bacterial gene–gene functional associations through large-scale phylogenetic profiling. Bioinformatics, 37(1), 17-22."
   )
 )
