@@ -8,6 +8,12 @@ The online web-server ([PhyloCorrelate](https://phylocorrelate.uwaterloo.ca)) co
 
 This R package extends the functionality of PhyloCorrelate, so that it can be used with any custom tree and dataset of genes (binary presence/absence matrix).
 
+## Citation
+
+If this package proves useful in your research, please cite:
+
+Tremblay, B.J.M., Lobb, B., and Doxey, A.C. (2021). PhyloCorrelate: inferring bacterial gene-gene functional associations through large-scale phylogenetic profiling. _Bioinformatics_, 37(1), 17-22. DOI:[10.1093/bioinformatics/btaa1105](https://doi.org/10.1093/bioinformatics/btaa1105).
+
 ## Installation
 
 ```r

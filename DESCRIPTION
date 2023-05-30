@@ -1,9 +1,9 @@
 Package: phylocorrpkg
 Title: Phylogenetic correlations across large trees
-Version: 1.0.1
+Version: 1.0.2
 Authors@R:
       person(c("Benjamin", "Jean-Marie"), "Tremblay", role = c("aut", "cre"),
-        email = "b2tremblay@uwaterloo.ca",
+        email = "benjamin.tremblay@uwaterloo.ca",
         comment = c(ORCID = "0000-0002-7441-2951"))
 URL: https://github.com/doxeylab/phylocorrpkg
 BugReports: https://github.com/doxeylab/phylocorrpkg/issues
